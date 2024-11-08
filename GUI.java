@@ -12,6 +12,7 @@ public class GUI implements ActionListener
     JMenuBar menuBar;
     JMenu menuFile, menuEdit, menuFormat, menuColor;
     JMenuItem iNew, iOpen, iSave, iSaveAs, iExit;
+    File openFile = null;
 
     public static void main(String[] args) {
         new GUI(); //
@@ -91,14 +92,13 @@ public class GUI implements ActionListener
 
     @Override
     public void actionPerformed (ActionEvent e){
-
         if (e.getSource() == iOpen){ //if Open button is clicked, do the following
             JFileChooser fileChooser = new JFileChooser();
             int response = fileChooser.showOpenDialog(null); //select file to open
             //int response = fileChooser.showSaveDialog(null); //select file to save
 
             if (response == JFileChooser.APPROVE_OPTION){ //if the button that was clicked inside the fileChooser is Open
-                File openFile = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                openFile = new File(fileChooser.getSelectedFile().getAbsolutePath());
                 try{
                     FileReader reader = new FileReader(openFile);
                     int data = reader.read();
@@ -121,7 +121,24 @@ public class GUI implements ActionListener
             }
         }
 
+        if (e.getSource() == iSave){ //if Save button is clicked, do the following
+            String updatedText = textArea.getText();
 
+            try {
+                if (openFile == null){
+                    textArea.insert("No file currently opened", 0);
+                }
+                else{
+                    FileWriter writer = new FileWriter(openFile);
+                    writer.write(updatedText);
+                    writer.close();
+                }
+
+            }
+            catch (IOException ioException) {
+                System.out.println(ioException.getMessage());
+            }
+        }
 
     }
 
