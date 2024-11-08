@@ -78,6 +78,7 @@ public class GUI implements ActionListener
         menuFile.add(iOpen);
 
         iSave = new JMenuItem("Save");
+        iSave.addActionListener(this); //makes it so actionListener is listening for actions on this particular button
         menuFile.add(iSave);
 
         iSaveAs = new JMenuItem("Save As");
@@ -109,6 +110,7 @@ public class GUI implements ActionListener
                         data = reader.read();
                         counter++;
                     }
+                    reader.close();
                 }
                 catch(FileNotFoundException notFoundException){
                     System.out.println(notFoundException.getMessage());
