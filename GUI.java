@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Date;
+import java.util.ArrayList;
 
 public class GUI implements ActionListener
 {
@@ -12,7 +14,11 @@ public class GUI implements ActionListener
     JMenuBar menuBar;
     JMenu menuFile, menuEdit, menuFormat, menuColor;
     JMenuItem iNew, iOpen, iSave, iSaveAs, iExit;
+    JLabel date;
+    JSeparator separator;
     File openFile = null;
+
+    String lastSaved;
 
     public static void main(String[] args) {
         new GUI(); //
@@ -65,6 +71,12 @@ public class GUI implements ActionListener
 
         menuColor = new JMenu("Color");
         menuBar.add(menuColor);
+
+        separator = new JSeparator();
+        menuBar.add(separator);
+
+        date = new JLabel("Last saved:");
+        menuBar.add(date);
     }
 
     //Method to add & hold the items listed in the file section
@@ -96,7 +108,7 @@ public class GUI implements ActionListener
             JFileChooser fileChooser = new JFileChooser();
             int response = fileChooser.showOpenDialog(null); //select file to open
             //int response = fileChooser.showSaveDialog(null); //select file to save
-
+            lastSaved = ""; //resets last saved
             if (response == JFileChooser.APPROVE_OPTION){ //if the button that was clicked inside the fileChooser is Open
                 openFile = new File(fileChooser.getSelectedFile().getAbsolutePath());
                 try{
@@ -104,12 +116,28 @@ public class GUI implements ActionListener
                     int data = reader.read();
                     int counter = 0;
 
-                    while(data != -1){
 
-                        textArea.insert(String.valueOf((char)data), counter);
-                        data = reader.read();
-                        counter++;
+                    while(data != -1)
+                    {
+                        //if last reader reaches last 40 characters of file,
+                        //do not print to textArea and rather add to String
+                        //of JLabel.
+                        //Otherwise, continue writing as normal
+                        if (openFile.length() -counter <= 40)
+                        {
+                            lastSaved += String.valueOf((char)data);
+                            data = reader.read();
+                            //delete comment to see last 40 printed System.out.println(lastSaved);
+                            counter++;
+                        }
+                        else
+                        {
+                            textArea.insert(String.valueOf((char)data), counter);
+                            data = reader.read();
+                            counter++;
+                        }
                     }
+                    date.setText(lastSaved);
                     reader.close();
                 }
                 catch(FileNotFoundException notFoundException){
@@ -131,7 +159,13 @@ public class GUI implements ActionListener
                 else{
                     FileWriter writer = new FileWriter(openFile);
                     writer.write(updatedText);
+                    //below line adds the date to the tail-end of saved file.
+                    //it will not appear when file is read (see Open ActionListener func)
+                    writer.write("\n Last saved: " + new Date());
                     writer.close();
+
+                    date.setText("Last saved: " + new Date());
+
                 }
 
             }
@@ -143,4 +177,3 @@ public class GUI implements ActionListener
     }
 
 }
-
