@@ -30,6 +30,7 @@ public class GUI implements ActionListener
         createWindow();
         createTextArea();
         createMenuBar();
+        // potato
         createFileMenu();
         window.setVisible(true); //set the window visible
     }
