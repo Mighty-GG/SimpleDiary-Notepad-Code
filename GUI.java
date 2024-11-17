@@ -310,7 +310,7 @@ public class GUI implements ActionListener
 
                     date.setText("Last saved: " + new Date());
 
-                }
+                } // potato
 
             }
             catch (IOException ioException) {
