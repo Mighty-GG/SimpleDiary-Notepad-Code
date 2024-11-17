@@ -61,7 +61,7 @@ public class GUI2 implements ActionListener
 
     //Method that generates the window for the notepad
     public void createWindow()
-    {
+    { // do
         window = new JFrame("SimpleDiary"); //top bar of window text
         window.setSize(900, 700); //size of window
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //window closes when clicking X
