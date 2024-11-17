@@ -26,7 +26,7 @@ public class GUI implements ActionListener
 
     //constructor class
     public GUI()
-    {
+    { // test
         createWindow();
         createTextArea();
         createMenuBar();
