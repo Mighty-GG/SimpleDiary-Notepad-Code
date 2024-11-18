@@ -48,17 +48,8 @@ public class GUI implements ActionListener
         path += File.separator + "Entries";
         files = new ArrayList<File>();
         files.add(new File (path));
-        /*
-        Checks if file directory is created
-        You should be able to see the file in file explorer upon run
-
-        if (entry.exists()) {
-            System.out.println(entry + " already exists");
-        } else if (entry.mkdirs()) {
-            System.out.println(entry + " was created");
-        } else {
-            System.out.println(entry + " was not created");
-        }*/
+        entry = new File(path);
+        boolean test = entry.mkdirs();
     }
 
     //Method that generates the window for the notepad
@@ -195,14 +186,14 @@ public class GUI implements ActionListener
             files.add(new File(path));
             //resets openFile so that it may be saved
             //(save does not work if file is null)
-            openFile = files.getLast();
+            openFile = files.get(files.size() - 1);
 
             //entry text was already read in createNewFileWindow
             //opens printwriter which writes previously saved text, then closes
             //printwriter
             try
             {
-                fw = new FileWriter(files.getLast());
+                fw = new FileWriter(files.get(files.size()-1));
                 fw.write(text);
                 //date function here is identical to save
                 fw.write("Last saved: " + new Date());
