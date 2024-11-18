@@ -238,7 +238,8 @@ public class GUI implements ActionListener
 
         if (e.getSource() == iOpen){ //if Open button is clicked, do the following
 
-            JFileChooser fileChooser = new JFileChooser();
+            JFileChooser fileChooser = new JFileChooser(entry);
+
             int response = fileChooser.showOpenDialog(null); //select file to open
             //int response = fileChooser.showSaveDialog(null); //select file to save
             lastSaved = ""; //resets last saved
