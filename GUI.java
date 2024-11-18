@@ -15,7 +15,7 @@ public class GUI implements ActionListener
     JScrollPane scrollPane;
     JPanel savingPanel;
     JMenuBar menuBar;
-    JMenu menuFile, menuEdit, menuFormat, menuColor;
+    JMenu menuFile, menuEdit, menuFormat;
     JMenuItem iNew, iOpen, iSave, iSaveAs, iExit;
     JLabel date, saveQuery;
     JButton cancel, save;
@@ -130,8 +130,6 @@ public class GUI implements ActionListener
         menuFormat = new JMenu("Format");
         menuBar.add(menuFormat);
 
-        menuColor = new JMenu("Color");
-        menuBar.add(menuColor);
 
         separator = new JSeparator();
         menuBar.add(separator);
