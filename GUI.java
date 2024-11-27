@@ -16,7 +16,7 @@ public class GUI implements ActionListener
     JPanel savingPanel;
     JMenuBar menuBar;
     JMenu menuFile, menuEdit, menuFormat;
-    JMenuItem iNew, iOpen, iSave, iSaveAs, iExit;
+    JMenuItem iNew, iOpen, iSave, iDelete;
     JLabel date, saveQuery;
     JButton cancel, save;
     JSeparator separator;
@@ -145,7 +145,6 @@ public class GUI implements ActionListener
         iNew.addActionListener(this);
         menuFile.add(iNew);
 
-
         iOpen = new JMenuItem("Open");
         iOpen.addActionListener(this); //makes it so actionListener is listening for actions on this particular button
         menuFile.add(iOpen);
@@ -154,12 +153,9 @@ public class GUI implements ActionListener
         iSave.addActionListener(this); //makes it so actionListener is listening for actions on this particular button
         menuFile.add(iSave);
 
-        iSaveAs = new JMenuItem("Save As");
-        iSaveAs.addActionListener(this); //makes it so actionListener is listening for actions on this particular button
-        menuFile.add(iSaveAs);
-
-        iExit = new JMenuItem("Exit");
-        menuFile.add(iExit);
+        iDelete = new JMenuItem("Delete");
+        iDelete.addActionListener(this); //makes it so actionListener is listening for actions on this particular button
+        menuFile.add(iDelete);
     }
 
     @Override
@@ -177,6 +173,12 @@ public class GUI implements ActionListener
         //create a new file
         if(e.getSource() == save)
         {
+            /*
+            Makes it so the screen cleans itself when save is pressed, however, if there was a file open before new file was created, all the text from the opened
+            file will be copied to the new file. If save is not clicked once new file is created, the text that was copied from the previously opened file will
+            remain in the new file
+             */
+            textArea.setText("");
             //gets new header entry name before closing panel
             header = File.separator + headerEntry.getText();
             path += header;
@@ -300,15 +302,26 @@ public class GUI implements ActionListener
 
                     date.setText("Last saved: " + new Date());
 
-                } // potato
+                }
 
             }
             catch (IOException ioException) {
                 System.out.println(ioException.getMessage());
             }
         }
-        if (e.getSource() == iSaveAs){
-            JFileChooser fileChooser = new JFileChooser();
+
+        /*
+        Makes it so when "delete" is pressed, if some file is open, delete said file and clean screen
+        Otherwise, print related message
+         */
+        if (e.getSource() == iDelete){
+            if(openFile != null){
+                openFile.delete();
+                textArea.setText("");
+            }
+            else{
+                textArea.insert("No file currently opened", 0);
+            }
             
         }
 
