@@ -2,11 +2,11 @@ import java.awt.Font;
 
 public class Function_Format
 {
-    GUI2 gui;
+    GUI gui;
     Font arial, comicSansMS, timesNewRoman;
     String selectedFont;
 
-    public Function_Format(GUI2 gui)
+    public Function_Format(GUI gui)
     {
         this.gui = gui;
     }

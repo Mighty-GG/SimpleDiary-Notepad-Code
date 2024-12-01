@@ -1,9 +1,9 @@
 
 public class Function_Edit
 {
-    GUI2 gui;
+    GUI gui;
 
-    public Function_Edit(GUI2 gui)
+    public Function_Edit(GUI gui)
     {
         this.gui = gui;
     }
